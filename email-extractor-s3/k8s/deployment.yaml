@@ -26,9 +26,10 @@ spec:
                 values:
                 - amd64
                 - arm64
+      serviceAccountName: s3-csi-driver-sa  # This is the important line
       containers:
       - name: email-extractor
-        image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/email-extractor:latest
+        image: 595115466597.dkr.ecr.us-east-1.amazonaws.com/email-extractor:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
