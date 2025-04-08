@@ -1,5 +1,5 @@
 # Use multi-stage build for a smaller final image
-FROM --platform=$BUILDPLATFORM python:3.9-slim as builder
+FROM --platform=$BUILDPLATFORM python:3.9-slim AS builder
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Final stage
-FROM --platform=$TARGETPLATFORM python:3.9-slim
+FROM python:3.9-slim
 
 WORKDIR /app
 

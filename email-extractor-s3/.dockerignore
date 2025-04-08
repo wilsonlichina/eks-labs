@@ -1,0 +1,67 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Development environments
+.env
+.venv
+env/
+venv/
+ENV/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Kubernetes
+k8s/
+*.yaml
+
+# Documentation
+*.md
+!README.md
+
+# Test files
+tests/
+test/
+*_test.py
+*_tests.py
+
+# Deployment scripts
+deploy.sh
+
+# Logs
+logs/
+*.log
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Cached files
+.pytest_cache/
+.coverage
+htmlcov/

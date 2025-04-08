@@ -217,6 +217,11 @@ def list_images():
         logger.error(f"Error listing images: {str(e)}")
         return jsonify({"error": str(e), "status": "error"}), 500
 
+
+@bp.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "healthy"}), 200
+
 # Register blueprint
 app.register_blueprint(bp)
 
