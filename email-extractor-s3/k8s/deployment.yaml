@@ -26,6 +26,11 @@ spec:
                 values:
                 - amd64
                 - arm64
+      tolerations:
+      - key: "nodegroup"
+        operator: "Equal"
+        value: "graviton-ng"
+        effect: "NoSchedule"
       serviceAccountName: s3-csi-driver-sa  # This is the important line
       containers:
       - name: email-extractor
