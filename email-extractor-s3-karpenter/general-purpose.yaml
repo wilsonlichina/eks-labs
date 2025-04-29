@@ -8,7 +8,8 @@ metadata:
     kubernetes.io/description: "General purpose NodePool for generic workloads"
 spec:
   limits:
-    nodes: 2
+    nodes: "1"
+    memory: "32Gi"
   template:
     spec:
       requirements:
@@ -23,7 +24,11 @@ spec:
           values: ["on-demand"]
         - key: node.kubernetes.io/instance-type
           operator: In
-          values: ["c7g.2xlarge"]
+          values: 
+            - "c7g.large"
+            - "c7g.xlarge"
+            - "c7g.2xlarge"
+            - "c7g.4xlarge"
       nodeClassRef:
         group: karpenter.k8s.aws
         kind: EC2NodeClass

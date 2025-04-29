@@ -1,0 +1,38 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: eks-cluster-auto
+  region: us-east-1
+vpc:
+  id: vpc-0539750ca481b4a7f
+  subnets:
+    private:
+      us-east-1b:
+        id: subnet-0308e52a6a78f5251
+      us-east-1c:
+        id: subnet-0200382de3d5401c7
+  securityGroup: sg-0f3db108731094386
+managedNodeGroups:
+- name: eksctl-nodegroup
+  amiFamily: AmazonLinux2
+  instanceType: c7g.4xlarge
+  minSize: 0
+  desiredCapacity: 1
+  maxSize: 5
+  volumeSize: 100
+  volumeType: gp3
+  privateNetworking: true
+  subnets:
+  - subnet-0308e52a6a78f5251
+  - subnet-0200382de3d5401c7
+  ssh:
+    allow: true
+    publicKeyName: keypair_20240605
+
+iam:
+  withOIDC: true
+
+addons:
+ - name: vpc-cni
+ - name: coredns
+ - name: kube-proxy

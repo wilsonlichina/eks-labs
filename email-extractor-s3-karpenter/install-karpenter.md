@@ -1,5 +1,54 @@
 # EKS Karpenter 安装指南
 
+
+## 创建EKS集群的脚本
+
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: eks-wm-fat
+  region: eu-central-1
+managedNodeGroups:
+- name: eks-wm-fat-nodegroups-v1
+  amiFamily: AmazonLinux2
+  instanceType: c7g.4xlarge
+  minSize: 0
+  desiredCapacity: 1
+  maxSize: 5
+  volumeSize: 100
+  volumeType: gp3
+  privateNetworking: true
+  subnets:
+  - subnet-043c3cdcfb07c6e4b
+  - subnet-03cd416460b0d5ed1
+  - subnet-025a3fa9307e8b644
+  ssh:
+    allow: true
+    publicKeyName: eks-pro
+  tags:
+    k8s.io/node: eksctl-eks-wm-fat-graviton-v1
+  propagateASGTags: true
+  datavolume:
+  preBootstrapCommands:
+  - "sudo mkfs.xfs /dev/nvme1n1; sudo mkdir -p /var/lib/containerd ;sudo echo /dev/nvme1n1 /var/lib/containerd xfs defaults,noatime 1 2 >> /etc/fstab"
+  - "sudo mount -a"
+  additionalVolumes:
+  - volumeName: '/dev/xvdb' # required
+    volumeSize: 1000
+    volumeType: 'gp3'
+iam:
+  withOIDC: true
+
+addons:
+ - name: vpc-cni
+ - name: coredns
+ - name: kube-proxy
+
+
+
+
+
+
 ## 1. 安装IAM Role and IAM Policy and Queue
 
 设置环境变量：
@@ -83,3 +132,10 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
   --set serviceAccount.create=false \
   --set serviceAccount.name=karpenter \
   --set nodeSelector."alpha\.eksctl\.io/nodegroup-name"=ng-7dff9970
+
+## 6. 创建Nodepool
+
+kubectl apply -f general-purpose.yaml 
+
+
+
